@@ -3,23 +3,22 @@
 # Virtuoso			Bulk Loader Script
 #
 # Description: Bulk loader script for Virtuoso
-# Usage: vload [rdf|ttl|nt|nq] [virtuososo_allowed_directory] [data_file] [graph_uri] [log_directory] [virtuoso_password]
+# Usage: vload [virtuososo_allowed_directory] [data_file] [graph_uri] [log_directory] [virtuoso_password]
 
 # Get input arguments
 args=("$@")
-if [ $# -ne 6 ]; then
-    echo "Wrong number of arguments. Correct usage: \"vload [rdf|ttl|nt|nq] [virtuososo_allowed_directory] [data_file] [graph_uri] [log_directory] [virtuoso_password]\""
+if [ $# -ne 5 ]; then
+    echo "Wrong number of arguments. Correct usage: \"vload [virtuososo_allowed_directory] [data_file] [graph_uri] [log_directory] [virtuoso_password]\""
 else
-    input_format=${args[0]}
-    VAD=${args[1]}
-    data_file=${args[2]}
-    graph_uri=${args[3]}
-    LOG_DIR=${args[4]}
-    VIRT_PSWD=${args[5]}
+    VAD=${args[0]}
+    data_file=${args[1]}
+    graph_uri=${args[2]}
+    LOG_DIR=${args[3]}
+    VIRT_PSWD=${args[4]}
 
     LOG_DATA_FILE=`echo $data_file | sed 's/[^a-zA-Z0-9\.\-\_]/-/g'`
     LOG_GRAPH_URI=`echo $graph_uri | sed 's/[^a-zA-Z0-9i\.\-\_]/-/g'`
-    LOGFILE="$LOG_DIR/vload_${input_format}_${LOG_DATA_FILE}_${LOG_GRAPH_URI}-`date +%Y%m%d-%H%M%S`.log"
+    LOGFILE="$LOG_DIR/vload_${LOG_DATA_FILE}_${LOG_GRAPH_URI}-`date +%Y%m%d-%H%M%S`.log"
     # Status message
     echo "Loading triples into graph <$graph_uri>..."
 
