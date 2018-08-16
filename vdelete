@@ -1,0 +1,50 @@
+#!/bin/bash
+#
+# Virtuoso			Graph Delete Script for Virtuoso OSE
+#
+# Description: Bash script to delte a named graph in Virtuoso
+# Usage: vdelete [graph_uri] [log_directory] [virtuoso_password]
+
+# Get input arguments
+args=("$@")
+if [ $# -ne 3 ]; then
+    echo "Wrong number of arguments. Correct usage: \"vdelete [graph_uri] [log_directory] [virtuoso_password]\""
+else
+    # Get graph_uri
+    graph_uri=${args[0]}
+    LOG_DIR=${args[1]}
+    VIRT_PSWD=${args[2]}
+
+    LOG_GRAPH_URI=`echo $graph_uri | sed 's/[^a-zA-Z0-9i\.\-\_]/-/g'`
+    LOGFILE="$LOG_DIR/vdelete_${LOG_GRAPH_URI}-`date +%Y%m%d-%H%M%S`.log"
+    # Status message
+    echo "Deleting triples from graph <$graph_uri>, please wait..."
+
+    # Log into Virtuoso isql env
+    isql_cmd="isql-v -U dba -P $VIRT_PSWD"
+
+    # Build the Virtuoso commands 
+    sparql_delete="SPARQL CLEAR GRAPH <$graph_uri>;"
+
+    # Write the load commands to the log 
+    echo "----------" >> ${LOGFILE}
+    echo $sparql_delete >> ${LOGFILE}
+    echo "----------" >> ${LOGFILE}
+
+    # Run the Virtuoso commands
+    ${isql_cmd} << EOF &> ${LOGFILE}
+	$sparql_delete
+	checkpoint;
+	exit;
+EOF
+    result=$?
+    if [ $result != 0 ]
+    then
+	echo "Failed to delete the graph $graph_uri. Check ${LOGFILE} for details"
+	exit $result
+    fi
+
+    # Status message
+    echo "Deleting finished! Check ${LOGFILE} for details."
+fi
+
