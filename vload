@@ -30,13 +30,6 @@ else
     run_func="rdf_loader_run();"
     select_func="select * from DB.DBA.load_list;"
    
-    # Write the load commands to the log 
-    echo "----------" >> ${LOGFILE}
-    echo $load_func >> ${LOGFILE}
-    echo $run_func >> ${LOGFILE}
-    echo $select_func >> ${LOGFILE}
-    echo "----------" >> ${LOGFILE}
-
     # Run the Virtuoso commands
     ${isql_cmd} << EOF &> ${LOGFILE}
 	    $load_func
@@ -44,6 +37,14 @@ else
             $select_func   
             exit;
 EOF
+
+    # Write the load commands to the log 
+    echo "----------" >> ${LOGFILE}
+    echo $load_func >> ${LOGFILE}
+    echo $run_func >> ${LOGFILE}
+    echo $select_func >> ${LOGFILE}
+    echo "----------" >> ${LOGFILE}
+
     result=$?
 
     if [ $result != 0 ]

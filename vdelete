@@ -2,7 +2,7 @@
 #
 # Virtuoso			Graph Delete Script for Virtuoso OSE
 #
-# Description: Bash script to delte a named graph in Virtuoso
+# Description: Bash script to delete a named graph in Virtuoso
 # Usage: vdelete [graph_uri] [log_directory] [virtuoso_password]
 
 # Get input arguments
@@ -26,17 +26,17 @@ else
     # Build the Virtuoso commands 
     sparql_delete="SPARQL CLEAR GRAPH <$graph_uri>;"
 
-    # Write the load commands to the log 
-    echo "----------" >> ${LOGFILE}
-    echo $sparql_delete >> ${LOGFILE}
-    echo "----------" >> ${LOGFILE}
-
     # Run the Virtuoso commands
     ${isql_cmd} << EOF &> ${LOGFILE}
 	$sparql_delete
 	checkpoint;
 	exit;
 EOF
+
+    # Write the load commands to the log 
+    echo "----------" >> ${LOGFILE}
+    echo $sparql_delete >> ${LOGFILE}
+    echo "----------" >> ${LOGFILE}
     result=$?
     if [ $result != 0 ]
     then

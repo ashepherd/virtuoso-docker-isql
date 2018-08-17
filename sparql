@@ -1,0 +1,50 @@
+#!/bin/bash
+#
+# Virtuoso			SPARQL Command Script for Virtuoso OSE
+#
+# Description: Bash script to execute a SPARQL command in Virtuoso
+# Usage: sparql "[sparql_cmd]" [log_directory] [virtuoso_password]
+
+# Get input arguments
+args=("$@")
+if [ $# -ne 3 ]; then
+    echo "Wrong number of arguments. Correct usage: \"sparql "[sparql_cmd]" [log_directory] [virtuoso_password]\""
+else
+    # Get graph_uri
+    sparql_cmd=${args[0]}
+    LOG_DIR=${args[1]}
+    VIRT_PSWD=${args[2]}
+
+    LOGFILE="$LOG_DIR/sparql-`date +%Y%m%d-%H%M%S`.log"
+    # Status message
+    echo "Running SPARQL command: $sparql_cmd"
+
+    # Log into Virtuoso isql env
+    isql_cmd="isql-v -U dba -P $VIRT_PSWD"
+
+    # Build the Virtuoso commands 
+    sparql="SPARQL $sparql_cmd;"
+
+    # Run the Virtuoso commands
+    ${isql_cmd} << EOF &> ${LOGFILE}
+	$sparql
+	checkpoint;
+	exit;
+EOF
+
+    # Write the load commands to the log 
+    echo "----------" >> ${LOGFILE}
+    echo $sparql >> ${LOGFILE}
+    echo "----------" >> ${LOGFILE}
+
+    result=$?
+    if [ $result != 0 ]
+    then
+	echo "Failed to run the SPARQL command. Check ${LOGFILE} for details"
+	exit $result
+    fi
+
+    # Status message
+    echo "Command finished! Check ${LOGFILE} for details."
+fi
+
