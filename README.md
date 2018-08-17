@@ -19,6 +19,14 @@ services:
     environment:
       DBA_PASSWORD: "<dba_pswd>"
 ```
+
+## sparql ##
+
+Usage sparql [sparql_cmd] [log_directory] [virtuoso_dba_password]
+
+```docker exec -it www_virtuoso bash -c "cd /scripts && ./sparql 'CLEAR GRAPH <http://ocean-data.org/schema/> LOAD <http://ocean-data.org/schema/rdf.owl> INTO GRAPH <http://ocean-data.org/schema/>' /logs <dba_pswd>```
+
+THe command above clears a graph and then loads RDF into a graph using SPARQL
  
 ## vload ##
 
