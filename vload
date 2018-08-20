@@ -42,7 +42,7 @@ EOF
     echo "----------" >> ${LOGFILE}
     echo $load_func >> ${LOGFILE}
     echo $run_func >> ${LOGFILE}
-    echo $select_func >> ${LOGFILE}
+    echo ${select_func} >> ${LOGFILE}
     echo "----------" >> ${LOGFILE}
 
     result=$?
