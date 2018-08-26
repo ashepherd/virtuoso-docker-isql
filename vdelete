@@ -37,6 +37,10 @@ EOF
     echo "----------" >> ${LOGFILE}
     echo $sparql_delete >> ${LOGFILE}
     echo "----------" >> ${LOGFILE}
+
+    # Print out the log file
+    cat ${LOGFILE}
+
     result=$?
     if [ $result != 0 ]
     then

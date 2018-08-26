@@ -37,6 +37,9 @@ EOF
     echo $sparql >> ${LOGFILE}
     echo "----------" >> ${LOGFILE}
 
+    # Print out the log file
+    cat ${LOGFILE}
+
     result=$?
     if [ $result != 0 ]
     then
