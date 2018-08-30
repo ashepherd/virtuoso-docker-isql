@@ -22,17 +22,17 @@ services:
 
 ## sparql ##
 
-Usage sparql [sparql_cmd] [log_directory] [virtuoso_dba_password]
+Usage sparql [sparql_cmd] [log_file] [virtuoso_dba_password]
 
-```docker exec -it virtuoso bash -c "cd /scripts && ./sparql 'CLEAR GRAPH <http://ocean-data.org/schema/> LOAD <http://ocean-data.org/schema/rdf.owl> INTO GRAPH <http://ocean-data.org/schema/>' /logs <dba_pswd>```
+```docker exec -it virtuoso bash -c "cd /scripts && ./sparql 'CLEAR GRAPH <http://ocean-data.org/schema/> LOAD <http://ocean-data.org/schema/rdf.owl> INTO GRAPH <http://ocean-data.org/schema/>' /logs/sparql.log/ <dba_pswd>```
 
 THe command above clears a graph and then loads RDF into a graph using SPARQL
  
 ## vload ##
 
-Usage: vload [virtuososo_allowed_directory] [data_file] [graph_uri] [log_directory] [virtuoso_dba_password]
+Usage: vload [virtuososo_allowed_directory] [data_file] [graph_uri] [log_file] [virtuoso_dba_password]
 
-```docker exec -it virtuoso bash -c "cd /scripts && ./vload VAD dataset.rdf http://test-vad /logs <dba_pswd>"```
+```docker exec -it virtuoso bash -c "cd /scripts && ./vload VAD dataset.rdf http://test-vad /logs/vload.log <dba_pswd>"```
 
 The command above assumes:
 
@@ -43,4 +43,4 @@ The command above assumes:
 
 ## vdelete ##
 
-``` docker exec -it virtuoso bash -c "cd /scripts && ./vdelete http://test-vad /logs <dba_pswd>"```
+``` docker exec -it virtuoso bash -c "cd /scripts && ./vdelete http://test-vad /logs/vdelete <dba_pswd>"```

@@ -3,20 +3,18 @@
 # Virtuoso			Graph Delete Script for Virtuoso OSE
 #
 # Description: Bash script to delete a named graph in Virtuoso
-# Usage: vdelete [graph_uri] [log_directory] [virtuoso_password]
+# Usage: vdelete [graph_uri] [log_file] [virtuoso_password]
 
 # Get input arguments
 args=("$@")
 if [ $# -ne 3 ]; then
-    echo "Wrong number of arguments. Correct usage: \"vdelete [graph_uri] [log_directory] [virtuoso_password]\""
+    echo "Wrong number of arguments. Correct usage: \"vdelete [graph_uri] [log_file] [virtuoso_password]\""
 else
     # Get graph_uri
     graph_uri=${args[0]}
-    LOG_DIR=${args[1]}
+    LOGFILE=${args[1]}
     VIRT_PSWD=${args[2]}
 
-    LOG_GRAPH_URI=`echo $graph_uri | sed 's/[^a-zA-Z0-9i\.\-\_]/-/g'`
-    LOGFILE="$LOG_DIR/vdelete_${LOG_GRAPH_URI}-`date +%Y%m%d-%H%M%S`.log"
     # Status message
     echo "Deleting triples from graph <$graph_uri>, please wait..."
 

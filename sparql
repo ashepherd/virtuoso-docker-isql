@@ -3,19 +3,18 @@
 # Virtuoso			SPARQL Command Script for Virtuoso OSE
 #
 # Description: Bash script to execute a SPARQL command in Virtuoso
-# Usage: sparql "[sparql_cmd]" [log_directory] [virtuoso_password]
+# Usage: sparql "[sparql_cmd]" [log_file] [virtuoso_password]
 
 # Get input arguments
 args=("$@")
 if [ $# -ne 3 ]; then
-    echo "Wrong number of arguments. Correct usage: \"sparql "[sparql_cmd]" [log_directory] [virtuoso_password]\""
+    echo "Wrong number of arguments. Correct usage: \"sparql "[sparql_cmd]" [log_file] [virtuoso_password]\""
 else
     # Get graph_uri
     sparql_cmd=${args[0]}
-    LOG_DIR=${args[1]}
+    LOGFILE=${args[1]}
     VIRT_PSWD=${args[2]}
 
-    LOGFILE="$LOG_DIR/sparql-`date +%Y%m%d-%H%M%S`.log"
     # Status message
     echo "Running SPARQL command: $sparql_cmd"
 

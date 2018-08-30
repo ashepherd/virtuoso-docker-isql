@@ -3,22 +3,19 @@
 # Virtuoso			Bulk Loader Script
 #
 # Description: Bulk loader script for Virtuoso
-# Usage: vload [virtuososo_allowed_directory] [data_file] [graph_uri] [log_directory] [virtuoso_password]
+# Usage: vload [virtuososo_allowed_directory] [data_file] [graph_uri] [log_file] [virtuoso_password]
 
 # Get input arguments
 args=("$@")
 if [ $# -ne 5 ]; then
-    echo "Wrong number of arguments. Correct usage: \"vload [virtuososo_allowed_directory] [data_file] [graph_uri] [log_directory] [virtuoso_password]\""
+    echo "Wrong number of arguments. Correct usage: \"vload [virtuososo_allowed_directory] [data_file] [graph_uri] [log_file] [virtuoso_password]\""
 else
     VAD=${args[0]}
     data_file=${args[1]}
     graph_uri=${args[2]}
-    LOG_DIR=${args[3]}
+    LOGFILE=${args[3]}
     VIRT_PSWD=${args[4]}
 
-    LOG_DATA_FILE=`echo $data_file | sed 's/[^a-zA-Z0-9\.\-\_]/-/g'`
-    LOG_GRAPH_URI=`echo $graph_uri | sed 's/[^a-zA-Z0-9i\.\-\_]/-/g'`
-    LOGFILE="$LOG_DIR/vload_${LOG_DATA_FILE}_${LOG_GRAPH_URI}-`date +%Y%m%d-%H%M%S`.log"
     # Status message
     echo "Loading triples into graph <$graph_uri>..."
 
