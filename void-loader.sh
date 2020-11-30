@@ -65,8 +65,8 @@ echo ${LOAD_LOG}
 # Delete the date-specific directory
 echo "Deleting the 'ready' file ..."
 rm ${READY_FILE}
-echo "Deleting the contents of directory ${GRAPH_DIR} ..."
-rm -rf "/data/${GRAPH_DIR}"
+#echo "Deleting the contents of directory ${GRAPH_DIR} ..."
+#rm -rf "/data/${GRAPH_DIR}"
 echo "Deleting the 'lock' file ..."
 rm ${LOCK_FILE}
 
