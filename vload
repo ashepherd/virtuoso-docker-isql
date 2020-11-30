@@ -26,12 +26,14 @@ else
     load_func="ld_dir('$VAD', '$data_file', '$graph_uri');"
     run_func="rdf_loader_run();"
     select_func="select * from DB.DBA.load_list WHERE ll_file LIKE '%${VAD}%';"
-   
+    delete_load_list="delete from DB.DBA.LOAD_LIST;"
+
     # Run the Virtuoso commands
     ${isql_cmd} << EOF &> ${LOGFILE}
 	    $load_func
             $run_func
             $select_func   
+            $delete_load_list
             exit;
 EOF
 
@@ -39,7 +41,8 @@ EOF
     echo "----------" >> ${LOGFILE}
     echo $load_func >> ${LOGFILE}
     echo $run_func >> ${LOGFILE}
-    echo ${select_func} >> ${LOGFILE}
+    echo $select_func >> ${LOGFILE}
+    echo $delete_load_list >> ${LOGFILE}
     echo "----------" >> ${LOGFILE}
     
     # Print out the log file

@@ -22,10 +22,12 @@ else
     isql_cmd="isql-v -U dba -P $VIRT_PSWD"
 
     # Build the Virtuoso commands 
+    commit="log_enable(3,1);"
     sparql_delete="SPARQL CLEAR GRAPH <$graph_uri>;"
 
     # Run the Virtuoso commands
     ${isql_cmd} << EOF &> ${LOGFILE}
+        $commit
 	$sparql_delete
 	checkpoint;
 	exit;
